@@ -1,0 +1,66 @@
+<div class="relative overflow-hidden shadow-lg sm:rounded-lg bg-white dark:bg-gray-800">
+  <table class="min-w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700">
+    <tr>
+      <th scope="col" class="px-6 py-3 font-medium">Course Name</th>
+      <th scope="col" class="px-6 py-3 font-medium">School Year</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let course of courses"
+        [ngClass]="{'border border-blue-500': selectedCourse === course.course}"
+        class="bg-white dark:bg-gray-800 border-b transition-transform duration-200 transform hover:scale-105">
+      <!-- Course Name Column -->
+      <th scope="row" class="flex items-center px-6 py-4 text-gray-900 dark:text-white">
+        <div class="ps-3">
+          <div class="text-base font-semibold">{{ course.course }}</div>
+        </div>
+      </th>
+
+      <!-- School Year Chooser Column -->
+      <td class="px-6 py-4">
+        <select (change)="onSchoolYearChange($event, course.course)" class="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+          <option selected disabled>Select a School Year</option>
+          <option *ngFor="let year of course.schoolYear" [value]="year">{{ year }}</option>
+        </select>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Display Student List Table When a School Year is Selected -->
+  <div *ngIf="selectedCourse && selectedSchoolYear" class="mt-8">
+    <h3 class="text-lg font-semibold py-4 text-gray-900 dark:text-white">Students for {{ selectedSchoolYear }} - {{ selectedCourse }}</h3>
+    <table class="min-w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700">
+      <tr>
+        <th scope="col" class="px-6 py-3 font-medium">Student Name</th>
+        <th scope="col" class="px-6 py-3 font-medium">Grade</th>
+        <th scope="col" class="px-6 py-3 font-medium">Comment</th>
+        <th scope="col" class="px-6 py-3 font-medium">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let student of noteToSend" class="bg-white dark:bg-gray-800 border-b transition-transform duration-200 transform hover:scale-105">
+        <td class="px-8 py-4">{{ getNameById(student.idStudent) }}</td>
+        <td class="px-6 py-4">
+          <input type="number" [(ngModel)]="student.value" placeholder="Enter grade" class="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+        </td>
+        <td class="px-6 py-4">
+          <input type="text" [(ngModel)]="student.comment" placeholder="Enter comment" class="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+        </td>
+        <td class="px-6 py-4">
+          <button (click)="sendGrade(student, selectedCourse)" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-150">Change Note</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <!-- Done Button -->
+    <div class="flex justify-end p-6">
+      <button (click)="onDoneClick(noteToSend, selectedCourse)" class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-700 transition duration-150">
+        Submit
+      </button>
+    </div>
+  </div>
+</div>

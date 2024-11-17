@@ -1,0 +1,227 @@
+<div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+      <!-- Project Title and Owners -->
+      <div class="p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-200">
+        <div class="mb-4 sm:mb-0">
+          <h1 class="text-3xl font-bold text-gray-900">{{details.name}}</h1>
+          <div class="flex space-x-2 mt-2">
+            <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">{{ details.domaine }}</span>
+            <!--    <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">E-commerce</span>-->
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+            <a [routerLink]="['/dashboard/user', 'professor' ,details.professorId]" class="flex items-center space-x-2">
+              <img [src]="apiUrlImage + details.professorImage" alt="professor" class="object-cover w-10 h-10 rounded-full bg-gray-300">
+              <span class="text-gray-800 font-medium">{{details.professorFullName}}</span>
+            </a>
+            <a
+              [routerLink]="['/dashboard/user', 'student' ,details.studentId]"
+              class="flex items-center space-x-2">
+              <img [src]="apiUrlImage + details.studentImage" alt="student" class="object-cover w-10 h-10 rounded-full bg-gray-300">
+              <span class="text-gray-800 font-medium">{{details.studentFullName}}</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Video Section -->
+      <div class="aspect-w-16 aspect-h-9">
+        <video
+          class="w-full h-full object-cover"
+          controls
+          poster="/placeholder.svg?height=720&width=1280&text=Video Thumbnail"
+        >
+          <source  [src]="apiUrlVideo + details.video?.videoName" alt="video" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <div class="p-8">
+        <!-- Project Images -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+          <img [src]="apiUrlImage + details.image[0].imageName" alt="details.video?.videoName" class="w-full h-full object-cover rounded-lg shadow-md hover:opacity-75 transition-opacity cursor-pointer">
+          <img [src]="apiUrlImage + details.image[1].imageName" alt="Project Image 2" class="w-full h-full object-cover rounded-lg shadow-md hover:opacity-75 transition-opacity cursor-pointer">
+        </div>
+
+        <!-- Project Description -->
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">Project Description</h2>
+          <p class="text-gray-600 leading-relaxed">
+            {{details.description}}
+          </p>
+        </div>
+
+        <!-- Download Section -->
+        <div class="mb-8 bg-gray-50 rounded-lg p-6" *ngIf="details.isOpen">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">Download Project</h2>
+          <div class="flex flex-col sm:flex-row items-center justify-between">
+            <div class="mb-4 sm:mb-0">
+              <p class="text-gray-600 mb-2">Project files and documentation</p>
+              <p class="text-sm text-gray-500">Size: {{ ((details.report.size ?? 0) / (1024 * 1024)) | number:'1.2-2' }} MB
+                • Last updated: {{ details.report.updatedAt ?? details.report.createdAt | date }} </p>
+            </div>
+            <a  class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center transition duration-300">
+              <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+              <button (click)="downloadPdf(details.report.pdfName)"><span>Download Report</span></button>
+
+
+            </a>
+          </div>
+        </div>
+
+        <div class="mb-8 bg-gray-50 rounded-lg p-6" *ngIf="!details.isOpen " >
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">Project Is Not Open For Download</h2>
+          <div class="flex flex-col sm:flex-row items-center justify-between">
+            <div class="mb-4 sm:mb-0">
+              <p class="text-gray-600 mb-2">If you want to use the ressources of this project ,</p>
+              <p class="text-sm text-gray-500">Send a Request of Download </p>
+            </div>
+            <button (click)="changeIsOpen()"
+              class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center transition duration-300"
+              [disabled]="hasRequests(details.name||'')"
+              [title]="hasRequests(details.name||'') ? textToShowOnHover : ''">
+
+              <fa-icon  [icon]="faEnvelope" class="text-white-400 pr-2.5"></fa-icon>
+              <span>Send Request</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+      <!-- Reviews Section -->
+
+
+      <section class="py-24 relative">
+        <div class="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto">
+          <div class="w-full">
+
+
+            <div class="bg-gray-50 p-8 rounded-3xl mb-11" >
+              <div *ngIf="!exists">
+                <h2 class="font-manrope font-bold text-4xl text-black mb-8 text-center">Submit Your Review</h2>
+              <form (ngSubmit)="submitReview()" class="flex flex-col gap-y-4">
+                <!-- Star Rating -->
+                <div class="flex items-center">
+                  <label class="font-medium text-lg text-black mr-4">Rating:</label>
+                  <fa-icon
+                    *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+                    [icon]="faStar"
+                    class="cursor-pointer"
+                    [ngClass]="{
+          'text-yellow-400': i < hoveredRating || i < newReview.evaluation,
+          'text-gray-400': i >= hoveredRating && i >= newReview.evaluation
+        }"
+                    (mouseenter)="hoverRating(i + 1)"
+                    (mouseleave)="hoverRating(0)"
+                    (click)="setRating(i + 1)"
+                  ></fa-icon>
+                </div>
+
+                <!-- Review Text -->
+                <div>
+                  <label for="review" class="font-medium text-lg text-black">Your Review:</label>
+                  <textarea id="review" [(ngModel)]="newReview.comment" name="comment" rows="4" class="w-full p-4 border border-gray-300 rounded-lg" placeholder="Write your review..."></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg mt-4">Submit Review</button>
+              </form>
+              </div>
+              <div class="mt-6" *ngIf="details.evaluationToReturns.length>0">
+
+            <h2 class="font-manrope font-bold text-4xl text-black mb-8 text-center">Project Reviews
+            </h2>
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-11 pb-11 border-b border-gray-100 max-xl:max-w-2xl max-xl:mx-auto">
+              <div class="box flex flex-col gap-y-4 w-full ">
+                <div *ngFor="let rating of [5, 4, 3, 2, 1]" class="flex items-center w-full">
+                  <p class="font-medium text-lg text-black mr-0.5">{{ rating }}</p>
+                  <fa-icon [icon]="faStar" class="text-yellow-400"></fa-icon>
+                  <p
+                    class="h-2 w-full xl:min-w-[278px] rounded-3xl bg-amber-50 ml-5 mr-3 border-2"
+                    [ngClass]="{'border-gray-400': evaluationsCount[rating] === 0, 'border-transparent': evaluationsCount[rating] > 0}"
+                  >
+      <span
+        class="h-full rounded-3xl bg-amber-400 flex"
+        [style.width.%]="evaluationsCount[rating] > 0 ? (evaluationsCount[rating] / details.totalEvaluations) * 100 : 0"
+      ></span>
+                  </p>
+                  <p class="font-medium text-lg text-black mr-0.5">{{ evaluationsCount[rating] }}</p>
+                </div>
+              </div>
+
+              <div class="p-8 bg-amber-50 rounded-3xl flex items-center justify-center flex-col">
+                <h2 class="font-manrope font-bold text-5xl text-amber-400 mb-6">
+                  {{details.meanEvaluations | number:'1.1-1'}}</h2>
+                <div class="flex items-center justify-center gap-2 sm:gap-6 mb-4">
+                  <fa-icon *ngFor="let star of getFullStars(details.meanEvaluations)" [icon]="faStar" class="text-yellow-400 text-xl"></fa-icon>
+
+                  <!-- Half Star -->
+                  <fa-icon *ngIf="hasHalfStar(details.meanEvaluations)" [icon]="faStarHalfAlt" class="text-yellow-400 text-xl"></fa-icon>
+
+                  <!-- Empty Stars -->
+                  <fa-icon *ngFor="let star of getEmptyStars(details.meanEvaluations)" [icon]="faStar" class="text-gray-400 text-xl"></fa-icon>
+                </div>
+                <p class="font-medium text-xl leading-8 text-gray-900 text-center">{{details.totalEvaluations}} Reviews</p>
+              </div>
+            </div>
+
+            <div  *ngFor="let review of details.evaluationToReturns" class="pt-11 pb-8 border-b border-gray-100 max-xl:max-w-2xl max-xl:mx-auto">
+              <div class="flex items-center gap-3 mb-4">
+                <fa-icon *ngFor="let star of getFullStars(review.evaluation)" [icon]="faStar" class="text-yellow-400 text-xl"></fa-icon>
+
+                <!-- Half Star -->
+                <fa-icon *ngIf="hasHalfStar(review.evaluation)" [icon]="faStarHalfAlt" class="text-yellow-400 text-xl"></fa-icon>
+
+                <!-- Empty Stars -->
+                <fa-icon *ngFor="let star of getEmptyStars(review.evaluation)" [icon]="faStar" class="text-gray-400 text-xl"></fa-icon>
+              </div>
+            <!--<h3 class="font-manrope font-semibold text-xl sm:text-2xl leading-9 text-black mb-6">
+
+              </h3>-->
+
+              <div class="flex sm:items-center flex-col min-[400px]:flex-row justify-between gap-5 mb-4">
+                <div class="flex items-center gap-3">
+                  <img [src]="apiUrlImage + review.imageName" alt="user Image" class="w-8 h-8 rounded-full object-cover">
+                  <h6 class="font-semibold text-lg leading-8 text-indigo-600 ">{{ review.userName }}</h6>
+                </div>
+                <p class="font-normal text-lg leading-8 text-gray-400">{{ review.createdAt | date }}</p>
+              </div>
+              <p class="font-normal text-lg leading-8 text-gray-400 max-xl:text-justify">{{review.comment}}</p>
+            </div>
+            </div>
+        </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Call to Action -->
+      <div class="bg-gray-100 px-8 py-6">
+        <div class="flex flex-wrap items-center justify-between">
+          <div class="flex-1 min-w-0">
+            <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+              Interested in this project?
+            </h2>
+            <p class="mt-1 text-gray-500">Get in touch to learn more or collaborate.</p>
+          </div>
+          <div class="mt-4 flex md:mt-0 md:ml-4">
+            <button class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              Save
+            </button>
+            <button class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300">
+              Contact
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-modal-form
+  [isOpen]="isOpen"
+  [projectName]="details.name||''"
+  [userId]="id"
+  (close)="closeModal()">  <!-- Bind the close event -->
+</app-modal-form>

@@ -1,0 +1,110 @@
+<div class="p-16 bg-gray-100 min-h-screen">
+  <div class="p-8 bg-white shadow-lg rounded-lg mt-24 relative">
+    <!-- Grid Layout for Profile Information -->
+    <div class="grid grid-cols-1 md:grid-cols-3">
+
+      <!-- Friends, Photos, Comments Section -->
+      <div class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
+        <div>
+          <p class="font-bold text-gray-700 text-xl">{{filteredProjects.length}}</p>
+          <p class="text-gray-400">Projects</p>
+        </div>
+        <div>
+          <p class="font-bold text-gray-700 text-xl">{{sumReview}}</p>
+          <p class="text-gray-400">Reviews</p>
+        </div>
+        <div>
+          <p class="font-bold text-gray-700 text-xl">{{meanReview | number:'1.1-1'}}</p>
+          <p class="text-gray-400">Mean Reviews</p>
+        </div>
+      </div>
+
+      <!-- Profile Picture -->
+      <div class="relative">
+        <div class="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center">
+          <!-- Profile Image -->
+          <img [src]="apiUrlImage + currentUser.imageName" alt="Profile Picture" class="w-full h-full rounded-full object-cover" />
+        </div>
+      </div>
+
+
+      <!-- Connect and Message Buttons -->
+      <div class="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
+        <button class="text-white py-2 px-4 uppercase rounded bg-blue-500 hover:bg-blue-600 shadow-lg font-medium transition transform hover:-translate-y-1 hover:scale-105">
+          Connect
+        </button>
+        <button class="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow-lg font-medium transition transform hover:-translate-y-1 hover:scale-105">
+          Message
+        </button>
+      </div>
+    </div>
+
+    <!-- Name, Location, and Job Info -->
+    <div class="mt-20 text-center border-b pb-12">
+      <h1 class="text-4xl font-medium text-gray-700">{{currentUser.firstName +" "+ currentUser.lastName}}</h1>
+      <p class="font-light text-gray-600 mt-3">{{userType}}</p>
+      <!-- <p class="mt-8 text-gray-500"><span class="font-light text-gray-500">{{userType}}</span></p> -->
+       <p class="mt-2 text-gray-500">{{userType=="student"?student.schoolYear:professor.departement}}</p>
+     </div>
+
+     <!-- Bio Section with Show More Button -->
+    <div *ngIf="filteredProjects.length > 0" class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <ng-container *ngFor="let project of filteredProjects">
+        <div *ngIf="project.isVisible"> <!-- Separate ng-container allows using both directives -->
+          <a [routerLink]="['/dashboard/project/details', project.name]" class="block rounded-lg p-4 bg-auto shadow-lg hover:shadow-xl transition-shadow duration-300 relative hover:bg-gray-100">
+            <!-- Top-right icon -->
+            <fa-icon [icon]="faStar" [class]="!project.isOpen ? 'text-yellow-300' : 'text-grey-300'" class="size-4 absolute top-3 right-5 mt-2 mr-2"></fa-icon>
+
+            <img
+              [src]="apiUrlImage + project.image[0].imageName" alt="{{ project.name }}"
+              class="h-56 w-full rounded-md object-cover"
+            />
+
+            <div class="mt-2">
+              <dl>
+                <div>
+                  <dt class="sr-only">Date</dt>
+                  <dd class="text-sm text-gray-500">{{ isNaN(project.meanEvaluations) ? 0
+                    : (project.meanEvaluations | number:'1.1-1') }} average reviews</dd>
+                </div>
+
+                <div>
+                  <dt class="sr-only">Title</dt>
+                  <dd class="font-medium">{{ project.name }}</dd>
+                </div>
+              </dl>
+
+              <!-- Increased gap for footer elements -->
+              <div class="mt-6 flex flex-wrap justify-center items-center gap-8 text-xs">
+                <div class="inline-flex shrink-0 items-center gap-2">
+                  <fa-icon [icon]="faChalkboardTeacher" class="text-indigo-700 size-4"></fa-icon>
+                  <div>
+                    <p class="text-gray-500">Professor</p>
+                    <p class="font-medium">{{ project.professorFullName }}</p>
+                  </div>
+                </div>
+
+                <div class="inline-flex shrink-0 items-center gap-2">
+                  <fa-icon [icon]="faUserGraduate" class="text-indigo-700 size-4"></fa-icon>
+                  <div>
+                    <p class="text-gray-500">Student</p>
+                    <p class="font-medium">{{ project.studentFullName }}</p>
+                  </div>
+                </div>
+
+                <div class="inline-flex shrink-0 items-center gap-2">
+                  <fa-icon [icon]="faBuilding" class="text-indigo-700 size-4"></fa-icon>
+                  <div>
+                    <p class="text-gray-500">Domaine</p>
+                    <p class="font-medium">{{ project.domaine }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+</div>

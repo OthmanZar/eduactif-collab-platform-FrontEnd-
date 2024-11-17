@@ -1,0 +1,268 @@
+<main class="flex items-center justify-center min-h-screen bg-gray-100 px-8 py-8 sm:px-12">
+  <div class="max-w-2xl w-full">
+    <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="isOpen" id="my-modal">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+             role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+          <div>
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+              <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
+            <div class="mt-3 text-center sm:mt-5">
+              <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                Error
+              </h3>
+              <div class="mt-2">
+                <p class="mt-2 text-sm text-red-700" *ngFor="let err of errorMsg">
+                  {{err}}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 sm:mt-6">
+            <button
+              class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
+              (click)="closeModal()">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="isSuccess" id="my-modalSucces">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+             role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+          <div>
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+              <fa-icon [icon]="faCheck" ></fa-icon>
+            </div>
+            <div class="mt-3 text-center sm:mt-5">
+              <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headlineSuccess">
+                Success
+              </h3>
+              <div class="mt-2">
+                <p class="mt-2 text-sm text-green-700" >
+                  Added Successfully , and An Activation has sent to your email .                  </p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 sm:mt-6">
+            <button
+              class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm"
+              (click)="closeModalSuccess()">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Container -->
+    <div class="bg-white p-8 shadow-lg rounded-lg">
+      <h2 class="text-2xl text-center font-semibold text-gray-800 mb-6">Create a New Project</h2>
+      <!-- Form Starts -->
+      <form (ngSubmit)="onSubmit()" #projectForm="ngForm" novalidate>
+        <div class="grid grid-cols-6 gap-6">
+          <!-- Project Name -->
+          <div class="col-span-6">
+            <label for="name" class="block text-sm font-medium text-gray-700">Project Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              [(ngModel)]="project.name"
+              required
+              maxlength="70"
+              class="mt-1 w-full rounded-md border-gray-300 bg-gray-50 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+              placeholder="Enter project name"
+            />
+          </div>
+
+          <!-- Project Description -->
+          <div class="col-span-6">
+            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              [(ngModel)]="project.description"
+              required
+              rows="4"
+              maxlength="1000"
+              class="mt-1 w-full rounded-md border-gray-300 bg-gray-50 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+              placeholder="Enter project description"
+            ></textarea>
+            <div class="text-right text-sm text-gray-500">
+              {{ project.description?.length || 0 }} / 1000
+            </div>
+          </div>
+
+          <!-- Project Date -->
+
+
+          <!-- Domain -->
+          <div class="col-span-6">
+            <label for="domaine" class="block text-sm font-medium text-gray-700">Domain</label>
+            <select
+              id="domaine"
+              name="domaine"
+              [(ngModel)]="project.domaine"
+              required
+              class="mt-1 w-full rounded-md border-gray-300 bg-gray-50 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+            >
+              <option value="" disabled selected>Select Domain</option>
+              <option *ngFor="let domaine of domaines" [value]="domaine">{{ domaine }}</option>
+
+              <!-- Add more domains as needed -->
+            </select>
+          </div>
+
+          <!-- Visibility -->
+          <div class="col-span-6 sm:col-span-3">
+            <label class="block text-sm font-medium text-gray-700">Visible</label>
+            <select
+              name="isVisible"
+              [(ngModel)]="project.isVisible"
+              required
+              class="mt-1 w-full rounded-md border-gray-300 bg-gray-50 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+            >
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+
+          <!-- Student ID -->
+          <div class="col-span-6 sm:col-span-3">
+            <label for="studentId" class="block text-sm font-medium text-gray-700">Student ID</label>
+            <input
+              type="number"
+              id="studentId"
+              name="studentId"
+              [(ngModel)]="studentId"
+              [disabled]="studentDisabled"
+              required
+              class="mt-1 w-full rounded-md border-gray-300 bg-gray-50 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+              placeholder="Enter student ID"
+            />
+          </div>
+
+          <!-- Professor ID -->
+          <div class="col-span-6 sm:col-span-3">
+            <label for="professorId" class="block text-sm font-medium text-gray-700">Professor ID</label>
+            <input
+              type="number"
+              id="professorId"
+              name="professorId"
+              [(ngModel)]="teacherId"
+              [disabled]="teacherDisabled"
+              required
+              class="mt-1 w-full rounded-md border-gray-300 bg-gray-50 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+              placeholder="Enter professor ID"
+            />
+          </div>
+
+          <!-- Open Project -->
+          <div class="col-span-6 sm:col-span-3">
+            <label class="block text-sm font-medium text-gray-700">Open</label>
+            <select
+              name="isOpen"
+              [(ngModel)]="project.isOpen"
+              required
+              class="mt-1 w-full rounded-md border-gray-300 bg-gray-50 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+            >
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+
+          <!-- Video Upload -->
+          <div class="col-span-6">
+            <label for="video" class="block text-sm font-medium text-gray-700">Upload Video</label>
+            <input
+              type="file"
+              id="video"
+              name="video"
+              (change)="onVideoSelected($event)"
+              accept="video/*"
+              required
+
+              class="mt-1 w-full rounded-md border-gray-300 bg-gray-50 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+            />
+            <div *ngIf="fileError" class="mt-2 text-red-600 text-sm">{{ VideoError }}</div> <!-- Display error message -->
+
+          </div>
+
+          <!-- Images Upload -->
+          <div class="col-span-6">
+            <label for="images" class="block text-sm font-medium text-gray-700">Upload Images (Max: 2)</label>
+            <input
+              type="file"
+              id="images"
+              name="images"
+              (change)="onImagesSelected($event)"
+              accept="image/*"
+              multiple
+              required
+              class="mt-1 w-full rounded-md border-gray-300 bg-gray-50 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+              max="2"
+
+            />
+          </div>
+          <div *ngIf="fileError" class="mt-2 text-red-600 text-sm">{{ ImageError }}</div> <!-- Display error message -->
+
+          <!-- Preview Images -->
+          <div class="col-span-6 mt-4">
+            <h3 class="text-sm font-medium text-gray-700">Preview Images</h3>
+            <div class="grid grid-cols-2 gap-4 mt-2">
+              <ng-container *ngFor="let image of previewImages">
+                <img *ngIf="image" [src]="image" class="h-32 w-full object-cover rounded-md" />
+              </ng-container>
+            </div>
+          </div>
+          <!-- Report Upload -->
+          <div class="col-span-6">
+            <label for="report" class="block text-sm font-medium text-gray-700">Upload Report</label>
+            <input
+              type="file"
+              id="report"
+              name="report"
+              (change)="onReportSelected($event)"
+              accept=".pdf, .doc, .docx"
+              required
+              class="mt-1 w-full rounded-md border-gray-300 bg-gray-50 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+
+            />
+            <div *ngIf="fileError" class="mt-2 text-red-600 text-sm">{{ fileError }}</div> <!-- Display error message -->
+
+          </div>
+
+          <!-- Submit Button -->
+          <div class="col-span-6">
+            <button
+              type="submit"
+              class="mt-4 w-full py-2 px-4 rounded-md bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
+            >
+              Create Project
+            </button>
+          </div>
+        </div>
+      </form>
+      <!-- Form Ends -->
+    </div>
+    <!-- Card Container Ends -->
+  </div>
+</main>

@@ -1,0 +1,115 @@
+<div class="relative isolate px-6 pt-1 lg:px-8">
+  <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+    <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+  </div>
+  <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+    <div class="hidden sm:mb-8 sm:flex sm:justify-center">
+      <div class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+        Join our community of learners! <a href="#" class="font-semibold text-indigo-600"><span class="absolute inset-0" aria-hidden="true"></span>Learn more <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+    <div class="text-center">
+      <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Unlock Your Potential with Quality Education</h1>
+      <p class="mt-6 text-lg leading-8 text-gray-600">Our platform connects you with expert mentors and comprehensive courses to enhance your learning experience. Achieve your educational goals with tailored guidance.</p>
+      <div class="mt-10 flex items-center justify-center gap-x-6">
+        <a href="#" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get started with your learning journey</a>
+        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Explore our courses <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
+    <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+  </div>
+</div>
+
+
+<!--       next      -->
+
+<section class="bg-gray-900 text-white">
+  <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+    <div class="mx-auto max-w-lg text-center">
+      <h2 class="text-3xl font-bold sm:text-4xl">Empower Your Learning</h2>
+
+      <p class="mt-4 text-gray-300">
+        Explore a suite of tools designed to enhance collaboration, engagement, and productivity in education.
+      </p>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Collaborative Tools Card -->
+
+      <app-feature-card
+        [icon]="faUser"
+        title="Collaborative Learning"
+        description="Collaborate with peers to enhance your learning experience through teamwork and shared projects."
+        [routerLink]="'/mentorship'"
+      ></app-feature-card>
+
+      <app-feature-card
+        [icon]="faUserGraduate"
+        title="Courses & Certifications"
+        description="Access various courses and gain certifications to boost your skills and career prospects."
+        [routerLink]="'/mentorship'"
+      ></app-feature-card>
+
+      <app-feature-card
+        [icon]="faChalkboardTeacher"
+        title="Expert Mentorship"
+        description="Receive guidance from industry experts and experienced mentors to accelerate your learning."
+        [routerLink]="'/mentorship'"
+      ></app-feature-card>
+
+      <app-feature-card
+        [icon]="faBook"
+        title="Comprehensive Courses"
+        description="Access a wide range of courses to help you master new skills."
+        [routerLink]="'/courses'"
+      ></app-feature-card>
+
+      <app-feature-card
+        [icon]="faGraduationCap"
+        title="Certification Programs"
+        description="Get certified in various disciplines and showcase your achievements."
+        [routerLink]="'/certifications'"
+      ></app-feature-card>
+
+      <app-feature-card
+        [icon]="faLightbulb"
+        title="Innovative Projects"
+        description="Engage in hands-on projects that help you apply your knowledge."
+        [routerLink]="'/projects'"
+      ></app-feature-card>
+
+      <app-feature-card
+        [icon]="faChalkboard"
+        title="Interactive Classes"
+        description="Join interactive classes designed to enhance your learning experience."
+        [routerLink]="'/interactive-classes'"
+      ></app-feature-card>
+
+      <app-feature-card
+        [icon]="faLaptopCode"
+        title="Coding Challenges"
+        description="Take on real-world coding challenges to sharpen your programming skills."
+        [routerLink]="'/coding-challenges'"
+      ></app-feature-card>
+
+      <app-feature-card
+        [icon]="faMicrophone"
+        title="Live Webinars"
+        description="Attend live webinars hosted by industry leaders and educational experts."
+        [routerLink]="'/webinars'"
+      ></app-feature-card>
+    </div>
+
+    <div class="mt-12 text-center">
+      <a
+        href="#"
+        class="inline-block rounded bg-pink-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-pink-700 focus:outline-none focus:ring focus:ring-yellow-400"
+      >
+        Get Started Today
+      </a>
+    </div>
+  </div>
+</section>
+

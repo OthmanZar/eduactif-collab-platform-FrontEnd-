@@ -1,0 +1,292 @@
+<div class="flex h-screen bg-gray-100">
+
+  <!-- Sidebar with transition -->
+  <div [class]="isSidebarOpen ? 'w-64' : 'w-0'"
+       class="flex flex-col bg-gray-800 transition-all duration-300 overflow-hidden">
+
+    <div class="flex items-center justify-center h-16 bg-white">
+       <span class="grid h-10 w-32 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600">
+      {{ userType }} SPACE
+    </span>
+    </div>
+    <div class="flex h-screen flex-col justify-between border-e bg-white">
+      <div class="px-4 py-6">
+        <ul class="mt-6 space-y-1">
+          <li>
+            <a
+              class="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
+              [routerLink]="['/dashboard/general']"
+            >
+
+                General
+            </a>
+          </li>
+
+          <li>
+            <details class="group [&_summary::-webkit-details-marker]:hidden">
+              <summary
+                class="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              >
+                <span class="text-sm font-medium"> Education </span>
+
+                <span class="shrink-0 transition duration-300 group-open:-rotate-180">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="size-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </span>
+              </summary>
+
+              <ul class="mt-2 space-y-1 px-4">
+                <li>
+                  <a
+
+                    class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                    [routerLink]="['/dashboard/information', currentUser.email]"
+                  >
+
+                    Informations
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    *ngIf="userType=='STUDENT'"
+                    class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                    [routerLink]="['/dashboard/notes', currentUser.email]"
+                  >
+
+                    Notes
+                  </a>
+                  <a
+                    *ngIf="userType=='PROFESSOR'"
+                    class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                    [routerLink]="['/dashboard/add-notes', currentUser.id]"
+                  >
+
+                    Notes
+                  </a>
+                </li>
+              </ul>
+            </details>
+          </li>
+
+          <li>
+            <a
+
+              class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              [routerLink]="['/dashboard/projects', userType.toLowerCase(),currentUser.id]"
+            >
+
+              Projects
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#"
+              class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            >
+              Projects Search
+            </a>
+          </li>
+
+          <li>
+            <details class="group [&_summary::-webkit-details-marker]:hidden">
+              <summary
+                class="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              >
+                <span class="text-sm font-medium"> Account </span>
+
+                <span class="shrink-0 transition duration-300 group-open:-rotate-180">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="size-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </span>
+              </summary>
+
+              <ul class="mt-2 space-y-1 px-4">
+                <li>
+                  <a
+                    href="#"
+                    class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                  >
+                    Details
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    href="#"
+                    class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                  >
+                    Security
+                  </a>
+                </li>
+
+                <li>
+                  <form action="#">
+                    <button
+                      type="submit"
+                      class="w-full rounded-lg px-4 py-2 text-sm font-medium text-gray-500 [text-align:_inherit] hover:bg-gray-100 hover:text-gray-700"
+                    >
+                      Logout
+                    </button>
+                  </form>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 flex justify-center items-center h-16">
+        <button (click)="isDisplay=true" class="text-gray-700 font-bold py-2 px-4 rounded inline-flex items-center">
+          <fa-icon [icon]="faRightFromBracket" class="text-black-100 text-xl p-1"></fa-icon>
+          <span>Logout</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="flex flex-col flex-1 overflow-y-auto">
+    <div class="flex items-center justify-between h-17 bg-white border-b border-gray-200">
+      <div class="flex items-center px-4">
+        <button (click)="toggleSidebar()" class="text-gray-500 focus:outline-none focus:text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <input class="mx-4 w-full border rounded-md px-4 py-2" type="text" placeholder="Search">
+
+      </div>
+      <div class="flex items-center pr-4">
+
+        <div class="sticky inset-x-0 bottom-0 border-t border-gray-100">
+          <a (click)="toggleDropdown()" class="flex items-center gap-2 bg-white p-4 hover:bg-gray-50 cursor-pointer">
+            <img
+              alt=""
+              [src]="apiUrlImage + currentUser.imageName"
+              class="size-10 rounded-full object-cover"
+            />
+            <div class="hidden md:flex">
+              <p class="text-xs">
+                <strong class="block font-medium">{{ currentUser.fullName }} </strong>
+                <span> {{ currentUser.email }} </span>
+              </p>
+            </div>
+
+          </a>
+
+          <!-- Dropdown Menu -->
+
+
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isDropdownOpen"
+         class="fixed right-0 mt-18 mr-1.5 w-56 bg-white rounded-lg shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800 dark:ring-gray-700 transition-all ease-in-out duration-300 origin-bottom-right"
+
+         style="z-index: 9999;" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+      <div class="py-2">
+        <a [routerLink]="['/dashboard/profile', userType.toLowerCase(),currentUser.email]" (click)="isDropdownOpen = false"
+           class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white transition ease-in-out duration-200 transform hover:translate-x-1"
+           role="menuitem">
+          Account settings
+        </a>
+        <a [routerLink]="['/dashboard/createProject', userType.toLowerCase(), currentUser.id]" (click)="isDropdownOpen = false"
+           class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white transition ease-in-out duration-200 transform hover:translate-x-1"
+           role="menuitem">
+          Add Project
+        </a>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+    <!--
+     <div *ngIf="selectedComponent=='general'" class="bg-blue-50 border-t border-b border-blue-500 text-blue-700 px-4 py-3 text-center" role="alert">
+       <p class="font-bold">Latest Projects</p>
+     </div>
+
+
+
+
+         <div *ngIf="selectedComponent=='general'" >
+           <app-project [projects]="projects"></app-project>
+
+         </div>
+
+         <div *ngIf="selectedComponent=='informations'" class="p-4">
+
+           <app-information [email]="student.email" ></app-information>
+         </div>
+
+         <div *ngIf="selectedComponent=='notes'" class="p-4">
+
+           <app-notes [email]="student.email"></app-notes>
+         </div>
+
+         <div *ngIf="selectedComponent=='Edit projects'" class="p-4">
+
+           <app-edit-projects [email]="student.email" ></app-edit-projects>
+         </div>
+ -->
+      </div>
+    </div>
+
+
+    <!--Modals Part -->
+
+
+<div class="fixed z-10 inset-0 overflow-y-auto" *ngIf="isDisplay"  id="my-modal">
+  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+      <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+    </div>
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+         role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+      <div>
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-neutral-100">
+          <fa-icon [icon]="faRightFromBracket" class="text-black-100 text-xl p-1"></fa-icon>
+        </div>
+        <div class="mt-3 text-center sm:mt-5">
+          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+            Do you Want to Log Out ?
+          </h3>
+
+        </div>
+      </div>
+      <div class="mt-5 sm:mt-6 flex gap-4">
+        <button
+          class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-neutral-600 text-base font-medium text-white hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 sm:text-sm"
+          (click)="cancel()">
+          Cancel
+        </button>
+        <button
+          class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
+          (click)="logOut()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

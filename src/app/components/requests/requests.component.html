@@ -1,0 +1,71 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <!-- Floating Search Bar -->
+  <div class="flex justify-center mb-8">
+    <input
+      type="text"
+      placeholder="Search by name..."
+      class="w-full max-w-lg px-4 py-3 border border-blue-300 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out"
+      id="searchBar"
+    />
+  </div>
+
+  <!-- Grid of Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10">
+    <!-- Iterate through the requests array -->
+    <ng-container *ngFor="let request of requests">
+      <div
+        class="bg-white shadow-xl rounded-xl overflow-hidden flex flex-col transition-all duration-500 ease-in-out min-h-[300px]"
+      >
+        <div class="relative p-6 flex-1">
+          <!-- Status Indicator with Dynamic Color -->
+          <div
+            class="absolute top-4 right-4 text-sm font-bold text-white px-2 py-1 rounded-full"
+            [ngClass]="{
+              'bg-yellow-500': request.state === 'Pending',
+              'bg-green-500': request.state === 'Accepted',
+              'bg-red-500': request.state === 'Canceled'
+            }"
+          >
+            {{ request.state }}
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 hover:text-blue-500 transition-colors duration-300">
+            {{ request.title }}
+          </h3>
+          <p
+            class="text-gray-500 text-center mt-6 mb-4 text-lg font-light leading-relaxed break-words"
+          >
+            {{ request.purpose }}
+          </p>
+        </div>
+        <div class="p-4">
+          <p class="text-gray-600">
+            <span class="font-semibold text-gray-800">Requested by:</span>
+            <a
+              [routerLink]="['/dashboard/user', request.userType ,request.userId]"
+              class="text-blue-600 hover:underline"
+            >
+              {{ request.fullName }}
+            </a>
+          </p>
+          <p class="text-gray-400 text-sm">Received on: {{ request.createdAt | date }}</p>
+        </div>
+        <div class="flex justify-center items-center p-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+          <div class="flex space-x-4">
+            <button
+              class="bg-white text-blue-600 font-semibold py-2 px-4 rounded-full hover:bg-blue-50 hover:text-blue-700 transition duration-300"
+              (click)="acceptRequest(request.projectName!,request.userId!)"
+            >
+              Accept
+            </button>
+            <button
+              class="bg-red-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-red-600 transition duration-300"
+              (click)="cancelRequest(request.projectName!,request.userId!)"
+            >
+              Decline
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

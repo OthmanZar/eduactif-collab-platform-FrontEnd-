@@ -1,0 +1,83 @@
+<div class="overflow-x-auto font-[sans-serif]">
+
+
+  <div class="md:flex m-4">
+    <p class="text-sm text-gray-500 flex-1">{{schoolName}}</p>
+    <div class="flex items-center max-md:mt-4">
+      <p class="text-sm text-gray-500">{{type}}</p>
+
+      <p class="pl-1.5 text-sm text-gray-500">{{date}}</p>
+
+
+
+    </div>
+  </div>
+
+
+  <table class="min-w-full bg-white">
+    <thead class="whitespace-nowrap bg-gray-100 rounded">
+    <tr>
+      <th class="p-4 text-left text-sm font-semibold text-black">
+        Course
+      </th>
+      <th class="p-4 text-left text-sm font-semibold text-black">
+        Note
+      </th>
+      <th class="p-4 text-left text-sm font-semibold text-black">
+        Comment
+      </th>
+      <th class="p-4 text-left text-sm font-semibold text-black">
+        Classement
+      </th>
+      <th class="p-4 text-left text-sm font-semibold text-black">
+        Validation
+      </th>
+    </tr>
+    </thead>
+
+    <tbody *ngIf="notesFinal.length>0" class="whitespace-nowrap">
+    <tr *ngFor="let note of notesFinal" class="hover:bg-gray-50">
+      <td class="p-4 text-sm text-black">
+        <div class="flex items-center cursor-pointer w-max">
+
+          <div class="ml-4">
+            <p class="text-sm font-semibold text-black">{{note.courName}}</p>
+
+          </div>
+        </div>
+      </td>
+      <td class="p-4 text-sm text-black">
+        {{ note.value === -1 ? '' : note.value }}
+      </td>
+      <td class="p-4 text-sm text-black">
+        {{note.comment}}
+
+      </td>
+      <td class="p-4 text-sm text-black">
+        **
+
+      </td>
+      <td class="p-4">
+        <div *ngIf="note.value >= 10 && note.value >= 0" >
+          <fa-icon [icon]="faCheck" class="text-green-500 text-3xl"></fa-icon>
+          <p class="text-xs text-gray-500 mt-1">Valide</p>
+        </div>
+        <div *ngIf="note.value < 10  && note.value >= 0" >
+          <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          <p class="text-xs text-gray-500 mt-1">Not Valide</p>
+        </div>
+
+      </td>
+    </tr>
+
+
+
+    </tbody>
+  </table>
+
+
+</div>

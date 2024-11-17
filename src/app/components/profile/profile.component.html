@@ -1,0 +1,149 @@
+<section class="w-full overflow-hidden dark:bg-gray-900">
+  <div class="flex flex-col">
+    <!-- Profile Card Section -->
+    <div class="mt-2 sm:w-[80%] xs:w-[90%] mx-auto p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+      <!-- Profile Image Section -->
+      <div class="flex flex-col items-center">
+        <img
+          [src]=" apiUrlImage + currentUser.imageName"
+             alt="User Profile"
+             class=" object-cover rounded-md lg:w-[12rem] lg:h-[12rem] md:w-[10rem] md:h-[10rem] sm:w-[8rem] sm:h-[8rem] xs:w-[7rem] xs:h-[7rem] outline outline-2 outline-offset-2 outline-blue-500" />
+
+        <!-- Full Name -->
+        <h1 class="w-full text-center my-4 sm:mx-4 xs:pl-4 text-gray-800 dark:text-white lg:text-4xl md:text-3xl sm:text-3xl xs:text-xl font-serif">
+          {{currentUser.firstName}} {{currentUser.lastName}}
+        </h1>
+      </div>
+
+      <!-- User Details Section -->
+      <div class="xl:w-[80%] lg:w-[90%] md:w-[90%] sm:w-[92%] xs:w-[90%] mx-auto flex flex-col gap-4 items-center">
+        <!-- User Details -->
+        <div class="w-full py-6 flex flex-col justify-center gap-2">
+          <div class="w-full flex sm:flex-row xs:flex-col gap-2 justify-center">
+            <!-- First Column -->
+            <div class="w-full">
+              <dl class="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
+                <div class="flex flex-col pb-3">
+                  <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">First Name</dt>
+                  <dd class="text-lg font-semibold">{{currentUser.firstName}}</dd>
+                </div>
+                <div class="flex flex-col py-3">
+                  <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Last Name</dt>
+                  <dd class="text-lg font-semibold">{{currentUser.lastName}}</dd>
+                </div>
+                <div class="flex flex-col py-3">
+                  <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Date Of Birth</dt>
+                  <dd class="text-lg font-semibold">{{currentUser.birthday }} </dd>
+                </div>
+                <div class="flex flex-col py-3">
+                  <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Gender</dt>
+                  <dd class="text-lg font-semibold">{{currentUser.sexe}}</dd>
+                </div>
+              </dl>
+            </div>
+            <!-- Second Column -->
+            <div class="w-full">
+              <dl class="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
+                <div class="flex flex-col pb-3">
+                  <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
+                    {{ userType?.toUpperCase() === 'STUDENT' ? 'School Year' : 'Department' }}
+                  </dt>
+                  <dd class="text-lg font-semibold">{{userType?.toUpperCase()=="STUDENT"? student.schoolYear : professor.departement}}</dd>
+                </div>
+                <div class="flex flex-col pt-3">
+                  <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Phone Number</dt>
+                  <dd class="text-lg font-semibold">{{currentUser.phone}}</dd>
+                </div>
+                <div class="flex flex-col pt-3">
+                  <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Email</dt>
+                  <dd class="text-lg font-semibold">{{currentUser.email}}</dd>
+                </div>
+                <div class="flex flex-col pt-3">
+                  <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Created At</dt>
+                  <dd class="text-lg font-semibold hover:text-blue-500">{{currentUser.createdDate | date}}</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="fixed right-2 bottom-20 flex flex-col rounded-sm bg-gray-200 text-gray-500 dark:bg-gray-200/80 dark:text-gray-700 hover:text-gray-600">
+          <a href="https://www.linkedin.com/in/samuel-abera-6593a2209/">
+            <div class="p-2 hover:text-primary">
+              <svg class="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M12.51 8.796v1.697a3.738 3.738 0 0 1 3.288-1.684c3.455 0 4.202 2.16 4.202 4.97V19.5h-3.2v-5.072c0-1.21-.244-2.766-2.128-2.766-1.827 0-2.139 1.317-2.139 2.676V19.5h-3.19V8.796h3.168Z" />
+                <path d="M7.2 6.106a1.61 1.61 0 0 1-.988 1.483 1.595 1.595 0 0 1-1.743-.348A1.607 1.607 0 0 1 5.6 4.5a1.601 1.601 0 0 1 1.6 1.606Z" />
+              </svg>
+            </div>
+          </a>
+          <a href="https://twitter.com/Samuel7Abera7">
+            <div class="p-2 hover:text-primary">
+              <svg class="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M13.795 10.533 20.68 2h-3.073l-5.255 6.517L7.69 2H1l7.806 10.91L1.47 22h3.074l5.705-7.07L15.31 22H22l-8.205-11.467Zm-2.38 2.95L9.97 11.464 4.36 3.627h2.31l4.528 6.317 1.443 2.02 6.018 8.409h-2.31l-4.934-6.89Z" />
+              </svg>
+            </div>
+          </a>
+          <a href="https://www.youtube.com/@silentcoder7">
+            <div class="p-2 hover:text-red-600">
+              <svg class="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M21.7 8.037a4.26 4.26 0 0 0-.789-1.964 2.84 2.84 0 0 0-1.984-.839c-2.767-.2-6.926-.2-6.926-.2s-4.157 0-6.928.2a2.836 2.836 0 0 0-1.983.839 4.225 4.225 0 0 0-.79 1.965 30.146 30.146 0 0 0-.2 3.206v1.5a30.12 30.12 0 0 0 .2 3.206c.094.712.364 1.39.784 1.972.604.536 1.38.837 2.187.848 2.766.2 6.926.2 6.926.2s4.158 0 6.926-.2c.808-.01 1.585-.312 2.188-.848.419-.581.69-1.26.785-1.972a30.12 30.12 0 0 0 .2-3.206v-1.5c0-.728-.064-1.452-.2-2.186ZM10.026 15.924V8.058l7.165 3.934-7.165 3.932Z" />
+              </svg>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Profile Picture and Change Password Section -->
+  <div class=" w-full py-10 bg-gray-100 dark:bg-gray-800 flex justify-center items-center">
+    <div class="flex w-full max-w-6xl">
+      <!-- Change Profile Picture Section -->
+      <div class="w-1/2 p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md">
+        <h2 class="text-xl font-bold text-gray-700 dark:text-gray-200 mb-4">Change Profile Picture</h2>
+
+        <div class=" mb-5  flex items-center justify-center w-full">
+          <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+              <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+              </svg>
+              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+            </div>
+            <input id="dropzone-file" type="file" class="hidden" />
+          </label>
+        </div>
+
+        <div class="flex justify-center mb-6">
+          <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md">Update Picture</button>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="w-0.5 bg-gray-300 dark:bg-gray-600 mx-4"></div>
+
+      <!-- Change Password Section -->
+      <div class="w-1/2 p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md">
+        <h2 class="text-xl font-bold text-gray-700 dark:text-gray-200 mb-4">Change Password</h2>
+        <div class="mb-4">
+          <label for="current-password" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Current Password</label>
+          <input type="password" id="current-password" class="mt-1 block w-full px-4 py-2 text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div class="mb-4">
+          <label for="new-password" class="block text-sm font-medium text-gray-600 dark:text-gray-300">New Password</label>
+          <input type="password" id="new-password" class="mt-1 block w-full px-4 py-2 text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div class="mb-6">
+          <label for="confirm-password" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Confirm New Password</label>
+          <input type="password" id="confirm-password" class="mt-1 block w-full px-4 py-2 text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div class="flex items-center justify-between">
+          <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">Update Password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

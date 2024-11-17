@@ -1,0 +1,168 @@
+<main class="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
+  <div class="max-w-xl lg:max-w-3xl">
+    <!-- Card Container -->
+    <div class="bg-white p-8 shadow-lg rounded-lg">
+      <!-- Form Starts -->
+      <div class="mt-8 grid grid-cols-6 gap-6">
+        <div class="col-span-6">
+          <label for="image" class="block text-sm font-medium text-gray-700">Profile Image</label>
+
+          <!-- Clickable circle for image upload -->
+          <div class="mt-2 w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden cursor-pointer"
+               (click)="triggerFileInput()">
+            <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview" class="w-full h-full object-cover" />
+            <div *ngIf="!imagePreview" class="text-gray-400 text-sm">No image</div>
+          </div>
+
+          <!-- Hidden file input -->
+          <input
+            type="file"
+            id="image"
+            name="image"
+            accept="image/*"
+            #fileInput
+            (change)="onFileSelected($event)"
+            class="hidden"
+          />
+        </div>
+
+        <div class="col-span-6 sm:col-span-3">
+          <label for="FirstName"  class="block text-sm font-medium text-gray-700">
+            First Name
+          </label>
+          <input
+            [(ngModel)]="data.firstName"
+            required
+            type="text"
+            id="FirstName"
+            name="first_name"
+            class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+          />
+        </div>
+
+        <div class="col-span-6 sm:col-span-3">
+          <label for="LastName" class="block text-sm font-medium text-gray-700">
+            Last Name
+          </label>
+          <input
+            [(ngModel)]="data.lastName"
+            required
+            type="text"
+            id="LastName"
+            name="last_name"
+            class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+          />
+        </div>
+
+        <div class="col-span-6">
+          <label for="Email" class="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            [(ngModel)]="data.email"
+            required
+            type="email"
+            id="Email"
+            name="email"
+            class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+          />
+        </div>
+
+        <div class="col-span-6 sm:col-span-3">
+          <label for="Phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+          <input
+            [(ngModel)]="data.phone"
+            required
+            type="text"
+            id="Phone"
+            name="phone"
+            class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+          />
+        </div>
+
+        <div class="col-span-6 sm:col-span-3">
+          <label for="Birthday" class="block text-sm font-medium text-gray-700">Birthday</label>
+          <input
+            [(ngModel)]="data.birthday"
+            required
+            type="date"
+            id="Birthday"
+            name="birthday"
+            class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+          />
+        </div>
+
+        <div class="col-span-6 sm:col-span-3">
+          <label class="block text-sm font-medium text-gray-700">Sexe</label>
+          <select [(ngModel)]="data.sexe" name="sexe" required class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
+            <option value="" disabled selected>Select Sexe</option>
+            <option value="Men">Men</option>
+            <option value="Women">Women</option>
+          </select>
+        </div>
+
+        <div *ngIf="selectedRole === 'teacher'" class="col-span-6 sm:col-span-3">
+          <label class="block text-sm font-medium text-gray-700">Department</label>
+          <select [(ngModel)]="departement" name="department" required class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
+            <option value="" disabled selected>Select Department</option>
+            <option *ngFor="let depar of departments" [value]="depar">{{ depar }}</option>
+          </select>
+        </div>
+
+        <div *ngIf="selectedRole === 'student'" class="col-span-6 sm:col-span-3">
+          <label class="block text-sm font-medium text-gray-700">Type</label>
+          <select [(ngModel)]="type.type" (change)="getAllSchoolYearsByType()" name="type" required class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
+            <option value="" disabled selected>Select type</option>
+            <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+
+        <div *ngIf="selectedRole === 'student' && type" class="col-span-6">
+          <label class="block text-sm font-medium text-gray-700">School Year</label>
+          <select [(ngModel)]="schoolYear" name="schoolYear" required class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
+            <option value="" disabled selected>Select school year</option>
+            <option *ngFor="let year of schoolYears" [value]="year">{{ year }}</option>
+          </select>
+        </div>
+
+        <div class="col-span-6 sm:col-span-3">
+          <label for="Password" class="block text-sm font-medium text-gray-700">Password</label>
+          <input
+            [(ngModel)]="data.password"
+            required
+            type="password"
+            id="password"
+            name="password"
+            class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+          />
+        </div>
+
+        <div class="col-span-6 sm:col-span-3">
+          <label for="PasswordConfirmation" class="block text-sm font-medium text-gray-700">Password Confirmation</label>
+          <input
+            [(ngModel)]="data.rePassword"
+            required
+            type="password"
+            id="PasswordConfirmation"
+            name="password_confirmation"
+            class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+          />
+        </div>
+
+
+
+        <div class="col-span-6">
+          <p class="text-sm text-gray-500">
+            By creating an account, you agree to our
+            <a href="#" class="text-gray-700 underline">terms and conditions</a>
+            and
+            <a href="#" class="text-gray-700 underline">privacy policy</a>.
+          </p>
+        </div>
+
+
+
+      </div>
+      <!-- Form Ends -->
+    </div>
+    <!-- Card Container Ends -->
+  </div>
+</main>
